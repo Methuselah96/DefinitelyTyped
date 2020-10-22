@@ -1,17 +1,19 @@
-export interface Config {
-  ignoreCase?: boolean;
-  ignoreAccents?: boolean;
-  stringify?: (obj: any) => string;
-  trim?: boolean;
-  matchFrom?: 'any' | 'start';
+import { OptionTypeBase } from './types';
+
+export interface Option<OptionType extends OptionTypeBase> {
+    label: string;
+    value: string;
+    data: OptionType;
 }
 
-import { stripDiacritics } from './diacritics';
+export interface Config<OptionType extends OptionTypeBase> {
+    ignoreCase?: boolean;
+    ignoreAccents?: boolean;
+    stringify?: (obj: Option<OptionType>) => string;
+    trim?: boolean;
+    matchFrom?: 'any' | 'start';
+}
 
-export interface Option { label: string; value: string; data: any; }
-
-/* tslint:disable:no-unnecessary-generics */
-export function createFilter<T extends { value: any; label: any } = Option>(config: Config | null): (
-  option: T,
-  rawInput: string
-) => boolean;
+export function createFilter<OptionType extends OptionTypeBase>(
+    config: Config<OptionType> | null
+): (option: Option<OptionType>, rawInput: string) => boolean;

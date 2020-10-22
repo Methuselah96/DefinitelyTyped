@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-import Select from 'react-select';
+import Select, { Option } from 'react-select';
 import { ColourOption, colourOptions } from '../data';
 
-function filterOption(arg: ColourOption, rawInput: string): boolean {
+function filterOption(arg: Option<ColourOption>, rawInput: string): boolean {
     return true;
 }
 

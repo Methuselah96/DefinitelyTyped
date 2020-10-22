@@ -39,6 +39,7 @@ import {
   GroupedOptionsType,
   OptionTypeBase,
 } from './types';
+import { Option } from './filters';
 
 export type MouseOrTouchEvent =
   | React.MouseEvent<HTMLElement>
@@ -102,7 +103,7 @@ export interface NamedProps<OptionType extends OptionTypeBase = { label: string;
   escapeClearsValue?: boolean;
   /* Custom method to filter whether an option should be displayed in the menu */
   filterOption?: ((
-    option: OptionType,
+    option: Option<OptionType>,
     rawInput: string
   ) => boolean) | null;
   /* Formats group labels in the menu as React components */

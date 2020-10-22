@@ -14,7 +14,7 @@ import { StateManager } from './src/stateManager';
 export default StateManager;
 
 export * from './src/types';
-export { createFilter } from './src/filters';
+export * from './src/filters';
 export { mergeStyles, Styles, StylesConfig } from './src/styles';
 export { defaultTheme } from './src/theme';
 
