@@ -32,6 +32,10 @@ declare class StreamDemux<T> {
     getBackpressureAll(): number;
     getConsumerBackpressure(consumerId: number): number;
 
+    getQueueDepth(streamName: string): number;
+    getQueueDepthAll(): number;
+    getConsumerQueueDepth(consumerId: number): number;
+
     hasConsumer(streamName: string, consumerId: number): boolean;
     hasConsumerAll(consumerId: number): boolean;
 

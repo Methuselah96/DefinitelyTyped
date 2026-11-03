@@ -144,6 +144,22 @@ const oldVersionSocket = create({
 // $ExpectType ProtocolVersions
 oldVersionSocket.protocolVersion;
 
+// authTokenName
+
+const authTokenSocket = create({
+    hostname: "localhost",
+    autoConnect: false,
+    authTokenName: null,
+});
+
+authTokenSocket.authTokenName = "my.custom.token";
+authTokenSocket.authTokenName = null;
+
+// $ExpectType string
+authTokenSocket.authTokenName;
+
+authTokenSocket.connect({ hostname: "127.0.0.2", authTokenName: null });
+
 export class MyAuthEngine implements AuthEngine.AGAuthEngine {
     saveToken(
         _name: string,

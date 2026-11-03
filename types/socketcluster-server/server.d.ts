@@ -33,7 +33,9 @@ declare class AGServer extends AsyncStreamEmitter<any> {
     allowClientPublish: boolean;
     perMessageDeflate?: boolean | {};
     httpServer: Server;
-    socketChannelLimit?: number;
+    socketChannelLimit: number | null;
+    maxInboundBatchSize: number | null;
+    inboundBackpressureLimit: number | null;
     protocolVersion: 1 | 2;
     strictHandshake: boolean;
     brokerEngine: AGSimpleBroker;
@@ -220,8 +222,23 @@ declare namespace AGServer {
         origins?: string;
 
         // The maximum number of unique channels which a single
-        // socket can subscribe to.
-        socketChannelLimit?: number;
+        // socket can subscribe to. Defaults to 1000.
+        // Set to null to allow any number of subscriptions.
+        socketChannelLimit?: number | null;
+
+        // The maximum size in bytes of a message from a client.
+        // Defaults to 4MB. Set to null to use the wsEngine default.
+        maxPayload?: number | null;
+
+        // The maximum number of packets which a single batched
+        // message from a client can contain. Defaults to 1000.
+        // Set to null to allow batches of any size.
+        maxInboundBatchSize?: number | null;
+
+        // The maximum number of unprocessed inbound messages which
+        // a single socket can accumulate. Defaults to 1000.
+        // Set to null to allow an unbounded backlog.
+        inboundBackpressureLimit?: number | null;
 
         // The interval in milliseconds on which to
         // send a ping to the client to check that

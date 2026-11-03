@@ -83,3 +83,16 @@ function wait(duration: number) {
         console.log("Error:", err);
     }
 })();
+
+// Queue depth
+
+const queueConsumer = demux.createConsumer("abc");
+
+// $ExpectType number
+demux.getQueueDepth("abc");
+
+// $ExpectType number
+demux.getQueueDepthAll();
+
+// $ExpectType number
+demux.getConsumerQueueDepth(queueConsumer.id);

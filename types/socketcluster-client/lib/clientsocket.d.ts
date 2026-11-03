@@ -38,7 +38,9 @@ declare class AGClientSocket extends AsyncStreamEmitter<any> implements AGChanne
     authState: AGClientSocket.AuthStates;
     signedAuthToken: AuthEngine.SignedAuthToken | null;
     authToken: AuthEngine.AuthToken | null;
-    authTokenName: string;
+    get authTokenName(): string;
+    // Setting this to null generates a name based on the current host.
+    set authTokenName(authTokenName: string | null);
 
     wsOptions?: WebSocket.ClientOptions | undefined;
 
@@ -315,8 +317,9 @@ declare namespace AGClientSocket {
         // A custom engine to use for storing and loading JWT auth tokens on the client side.
         authEngine?: AuthEngine.AGAuthEngine | null | undefined;
 
-        // The name of the JWT auth token (provided to the authEngine - By default this is the localStorage variable name); defaults to 'socketcluster.authToken'.
-        authTokenName?: string | undefined;
+        // The name of the JWT auth token (provided to the authEngine - By default this is the localStorage variable name).
+        // If null or omitted, a name is generated from the host, e.g. 'socketcluster.authToken.localhost:8000'.
+        authTokenName?: string | null | undefined;
 
         // The type to use to represent binary on the client. Defaults to 'arraybuffer'.
         binaryType?: string | undefined;

@@ -47,3 +47,19 @@ setInterval(() => {
     // Write data to the stream asynchronously,
     consumableStream.write(`Timestamp: ${Date.now()}`);
 }, 100);
+
+// Queue depth
+
+const queueConsumer = consumableStream.createConsumer();
+
+// $ExpectType number
+consumableStream.getQueueDepth();
+
+// $ExpectType number
+consumableStream.getConsumerQueueDepth(queueConsumer.id);
+
+// $ExpectType number
+queueConsumer.getQueueDepth();
+
+// $ExpectType number
+consumableStream.tailNode.seq;

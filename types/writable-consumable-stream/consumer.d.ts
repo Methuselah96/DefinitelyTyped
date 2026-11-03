@@ -15,6 +15,10 @@ declare class Consumer<T> implements ConsumableStream.Consumer<T> {
     releaseBackpressure(packet: any): void;
     getBackpressure(): number;
 
+    getQueueDepth(): number;
+
+    skipNode(dataNode: Consumer.Node<T>): void;
+
     write(packet: any): void;
 
     kill(value?: any): void;
@@ -36,6 +40,7 @@ declare namespace Consumer {
 
     interface Node<T> {
         next: Node<T> | null;
+        seq: number;
         data: {
             value: T;
             done: boolean;

@@ -28,8 +28,13 @@ declare class WritableConsumableStream<T> extends ConsumableStream<T> {
     kill(value?: T): void;
     killConsumer(consumerId: number, value?: T): void;
 
+    // The number of queued nodes held by the consumer that is furthest behind.
+    // Same as getQueueDepth().
     getBackpressure(): number;
     getConsumerBackpressure(consumerId: number): number;
+
+    getQueueDepth(): number;
+    getConsumerQueueDepth(consumerId: number): number;
 
     hasConsumer(consumerId: number): boolean;
 

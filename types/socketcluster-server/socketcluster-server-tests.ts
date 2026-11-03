@@ -111,3 +111,43 @@ class CustomAuthEngine implements socketClusterServer.AGServer.AuthEngineType {
 agServer = socketClusterServer.attach(httpServer, {
     authEngine: new CustomAuthEngine(),
 });
+
+// Inbound limits
+
+agServer = socketClusterServer.attach(httpServer, {
+    maxPayload: 8 * 1024 * 1024,
+    maxInboundBatchSize: 100,
+    inboundBackpressureLimit: 100,
+    socketChannelLimit: 100,
+});
+
+agServer = socketClusterServer.attach(httpServer, {
+    maxPayload: null,
+    maxInboundBatchSize: null,
+    inboundBackpressureLimit: null,
+    socketChannelLimit: null,
+});
+
+socketClusterServer.attach(httpServer, {
+    // @ts-expect-error
+    maxPayload: "4MB",
+});
+
+socketClusterServer.attach(httpServer, {
+    // @ts-expect-error
+    maxInboundBatchSize: "100",
+});
+
+socketClusterServer.attach(httpServer, {
+    // @ts-expect-error
+    inboundBackpressureLimit: "100",
+});
+
+// $ExpectType number | null
+agServer.maxInboundBatchSize;
+
+// $ExpectType number | null
+agServer.inboundBackpressureLimit;
+
+// $ExpectType number | null
+agServer.socketChannelLimit;
